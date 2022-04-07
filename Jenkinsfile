@@ -1,11 +1,11 @@
 pipeline{
-      agent any
     environment {
         registry = "paulcarroll/pyjenkins"
         registryCredential = 'docker-hub-login'
         dockerImage = ''
 
     }
+      agent any
     
   
     
