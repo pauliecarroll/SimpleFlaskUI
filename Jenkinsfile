@@ -14,24 +14,7 @@ pipeline{
                 git 'https://github.com/pauliecarroll/SimpleFlaskUI'
             }
             
-        }
-        
-        stage("Docker build") {
-            steps {
-                sh "docker build -t paulcarroll/SimpleFlaskUI ."
-            }
-        }
-        
-        stage("Docker login") {
-            steps{
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-login',
-                               usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                         sh "docker login --username $USERNAME --password $PASSWORD"
-                    }
-            }
-        }
-        
-                
+        }       
         
         stage("build image"){
             steps{
