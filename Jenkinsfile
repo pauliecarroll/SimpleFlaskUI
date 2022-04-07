@@ -3,8 +3,8 @@ pipeline{
     environment {
         registry = "paulcarroll/pyjenkins"
         registryCredential = 'docker-hub-login'
-        DOCKER_ID = credentials('DOCKER_ID')
-        DOCKER_PASSWORD = credentials('DOCKER_PASSWORD')
+        dockerImage = ''
+
     }
     
   
@@ -18,20 +18,14 @@ pipeline{
             }
             
         }
-        
-        stage{
-            steps{
-                echo 'Initializing..'
-                echo "running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Current branch: ${env.BRANCH_NAME}"
-                sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin'
-            }
+
         
         stage("build image"){
             steps{
-                echo 'building..'
-                sh 'docker build -t $DOCKER_ID/${JOB_NAME}'
-
+                script {
+                    img = registry + ":${env.BUILD_ID}"
+                    println("${img}")
+                    dockerImage = docker.build("${img}")
                 }
             }
         }
