@@ -57,8 +57,8 @@ pipeline{
                 script{
                     def stopcontainer = "docker stop ${JOB_NAME}"
                     def delcontName = "docker rm ${JOB_NAME}"
-                    def delimages = 'docker image prune -a iiforce'
-                    def drun = "docker run -d --mam,e ${JOB_NAME} -p 5000:5000 ${img}"
+                    def delimages = 'docker image prune -a --force'
+                    def drun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${img}"
                     sshagent(['docker-test']) {
                         sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no docker@176.254.99.64 ${stopcontainer}"
                         sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no docker@176.254.99.64 ${delcontainer}"
